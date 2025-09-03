@@ -67,11 +67,11 @@ jobs:
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #源码链接
-      WRT_REPO: ''
+      WRT_REPO: 'https://github.com/${{inputs.SOURCE}}.git'
       #源码分支
-      WRT_BRANCH: ''
+      WRT_BRANCH: '${{inputs.BRANCH}}'
       #源码名称
-      WRT_SOURCE: ''
+      WRT_SOURCE: '${{inputs.SOURCE}}'
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件
