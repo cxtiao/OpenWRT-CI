@@ -39,7 +39,6 @@ on:
         type: string
       TEST:
         description: '仅输出配置文件，不编译固件。'
-        default: 'true'
         required: true
         type: boolean
 
@@ -58,21 +57,21 @@ jobs:
       #默认主题
       WRT_THEME: argon
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: Ywrt
       #默认WIFI名称
-      WRT_SSID: OWRT
+      WRT_SSID: Ywrt
       #默认WIFI密码
       WRT_WORD: 12345678
       #默认地址
-      WRT_IP: 192.168.10.1
+      WRT_IP: 192.168.3.1
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #源码链接
-      WRT_REPO: https://github.com/${{inputs.SOURCE}}.git
+      WRT_REPO: ''
       #源码分支
-      WRT_BRANCH: ${{inputs.BRANCH}}
+      WRT_BRANCH: ''
       #源码名称
-      WRT_SOURCE: ${{inputs.SOURCE}}
+      WRT_SOURCE: ''
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件
