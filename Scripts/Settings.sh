@@ -5,6 +5,14 @@ sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/coll
 #修改immortalwrt.lan关联IP
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 
+TARGET_FILE="/www/luci-static/resources/view/status/include/10_system.js"
+if [ -f "$TARGET_FILE" ]; then
+    echo "Processing file: $TARGET_FILE"
+    cp "$TARGET_FILE" "$TARGET_FILE.bak"
+    sed -i 's/boardinfo\.model/"X3"/g' "$TARGET_FILE"
+    sed -i 's/boardinfo\.model || ""/"X3"/g' "$TARGET_FILE"
+fi
+
 WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh" 2>/dev/null)
 WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
 if [ -f "$WIFI_SH" ]; then
@@ -61,13 +69,4 @@ if [[ "${WRT_TARGET^^}" == *"QUALCOMMAX"* ]]; then
 		find $DTS_PATH -type f ! -iname '*nowifi*' -exec sed -i 's/ipq\(6018\|8074\).dtsi/ipq\1-nowifi.dtsi/g' {} +
 		echo "qualcommax set up nowifi successfully!"
 	fi
-fi
-
-TARGET_FILE="/www/luci-static/resources/view/status/include/10_system.js"
-if [ -f "$TARGET_FILE" ]; then
-    echo "Processing file: $TARGET_FILE"
-    # 备份原文件（便于恢复）
-    cp "$TARGET_FILE" "$TARGET_FILE.bak"
-    sed -i 's/boardinfo\.model/"X3"/g' "$TARGET_FILE"
-    sed -i 's/boardinfo\.model || ""/"X3"/g' "$TARGET_FILE"
 fi
