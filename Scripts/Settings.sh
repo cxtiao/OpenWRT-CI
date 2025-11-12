@@ -70,3 +70,4 @@ if [ -f "$TARGET_FILE" ]; then
     cp "$TARGET_FILE" "$TARGET_FILE.bak"
     sed -i 's/boardinfo\.model/"X3"/g' "$TARGET_FILE"
     sed -i 's/boardinfo\.model || ""/"X3"/g' "$TARGET_FILE"
+fi
