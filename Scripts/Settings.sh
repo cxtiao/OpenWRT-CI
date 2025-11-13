@@ -35,6 +35,26 @@ echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
+WRT_MODEL="X3"
+# 修改 argon 主题型号显示
+ARGON_FILES=$(find ./feeds/luci/themes/luci-theme-argon/ -type f \( -name "*.js" -o -name "*.htm" \))
+for file in $ARGON_FILES; do
+    if [ -f "$file" ]; then
+        sed -i "s/boardinfo\.model/\"$WRT_MODEL\"/g" "$file"
+        sed -i "s/boardinfo\.model || \"\"/\"$WRT_MODEL\"/g" "$file"
+    fi
+done
+
+# 修改系统状态显示
+STATUS_FILES=$(find ./feeds/luci/modules/luci-mod-status/ -type f \( -name "*.js" -o -name "*.htm" -o -name "*.uc" \))
+for file in $STATUS_FILES; do
+    if [ -f "$file" ]; then
+        sed -i "s/boardinfo\.model/\"$WRT_MODEL\"/g" "$file"
+        sed -i "s/boardinfo\.model || \"\"/\"$WRT_MODEL\"/g" "$file"
+    fi
+done
+echo 'echo "X3" > /tmp/sysinfo/model' >> ./package/base-files/files/etc/rc.local
+
 #手动调整的插件
 if [ -n "$WRT_PACKAGE" ]; then
 	echo -e "$WRT_PACKAGE" >> ./.config
@@ -62,6 +82,3 @@ if [[ "${WRT_TARGET^^}" == *"QUALCOMMAX"* ]]; then
 		echo "qualcommax set up nowifi successfully!"
 	fi
 fi
-
-#修改
-echo 'echo "X3" > /tmp/sysinfo/model' >> package/base-files/files/etc/rc.local
